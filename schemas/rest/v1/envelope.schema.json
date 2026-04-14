@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agent-gateway/rest/v1/envelope",
+  "title": "Agent Protocol v1 Envelope",
+  "description": "Parsed representation of a v1 agent protocol envelope",
+  "type": "object",
+  "required": ["verb", "version"],
+  "properties": {
+    "verb":    { "type": "string", "enum": ["TASK:submit", "TASK:status", "TASK:result", "TASK:ack", "TASK:error", "AGENT:ping", "AGENT:pong"] },
+    "version": { "type": "string", "pattern": "^v[0-9]+$" },
+    "fields":  { "type": "object", "additionalProperties": { "type": "string" } },
+    "body":    { "type": "string" }
+  }
+}

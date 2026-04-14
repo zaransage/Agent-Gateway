@@ -1,0 +1,8 @@
+{
+  "verb": "AGENT:ping",
+  "version": "v1",
+  "fields": {
+    "from": "gpt-4o-browser"
+  },
+  "body": null
+}

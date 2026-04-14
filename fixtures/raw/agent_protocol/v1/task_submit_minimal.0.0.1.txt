@@ -1,0 +1,3 @@
+AGENT/TASK:submit v1
+title: Fix typo in README
+desc: Correct spelling of "acknowledgement" in docs/adr/0005
