@@ -20,10 +20,11 @@ class AgentTasksQueue(ITaskQueue):
 
     STALE_HOURS = 2
 
-    def __init__(self, tasks_dir: Path) -> None:
-        self._backlog = tasks_dir / "backlog"
-        self._active  = tasks_dir / "active"
-        self._done    = tasks_dir / "done"
+    def __init__(self, tasks_dir: Path, project: str | None = None) -> None:
+        self._backlog  = tasks_dir / "backlog"
+        self._active   = tasks_dir / "active"
+        self._done     = tasks_dir / "done"
+        self._project  = project
         for d in (self._backlog, self._active, self._done):
             d.mkdir(parents=True, exist_ok=True)
 
@@ -61,6 +62,7 @@ class AgentTasksQueue(ITaskQueue):
                 task_id=task_id,
                 status="done",
                 title=bl.get("title", "") if bl else "",
+                project=self._project,
                 agent=rec.get("agent_id"),
                 notes=rec.get("notes"),
                 pr_url=rec.get("pr_url") or None,
@@ -74,6 +76,7 @@ class AgentTasksQueue(ITaskQueue):
                 task_id=task_id,
                 status="active",
                 title=bl.get("title", "") if bl else "",
+                project=self._project,
                 agent=claim.get("agent_id"),
                 notes=claim.get("notes") or None,
             )
@@ -81,7 +84,7 @@ class AgentTasksQueue(ITaskQueue):
         # backlog?
         bl = self._backlog_data(task_id)
         if bl:
-            return TaskStatus(task_id=task_id, status="queued", title=bl.get("title", ""))
+            return TaskStatus(task_id=task_id, status="queued", title=bl.get("title", ""), project=self._project)
 
         raise KeyError(f"Task {task_id!r} not found")
 
@@ -92,7 +95,7 @@ class AgentTasksQueue(ITaskQueue):
             try:
                 bl = json.loads(f.read_text())
                 tid = bl["id"]
-                results[tid] = TaskStatus(task_id=tid, status="queued", title=bl.get("title", ""))
+                results[tid] = TaskStatus(task_id=tid, status="queued", title=bl.get("title", ""), project=self._project)
             except Exception:
                 pass
 
@@ -107,6 +110,7 @@ class AgentTasksQueue(ITaskQueue):
                     task_id=tid,
                     status="active",
                     title=bl.get("title", "") if bl else "",
+                    project=self._project,
                     agent=cl.get("agent_id"),
                     notes=cl.get("notes") or None,
                 )
@@ -122,6 +126,7 @@ class AgentTasksQueue(ITaskQueue):
                     task_id=tid,
                     status="done",
                     title=bl.get("title", "") if bl else "",
+                    project=self._project,
                     agent=rec.get("agent_id"),
                     pr_url=rec.get("pr_url") or None,
                 )

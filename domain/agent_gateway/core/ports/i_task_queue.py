@@ -14,12 +14,13 @@ class TaskRef:
 @dataclass
 class TaskStatus:
     """Full status record for a task."""
-    task_id: str
-    status:  str                  # queued | active | done | failed
-    title:   str
-    agent:   Optional[str]        = None
-    notes:   Optional[str]        = None
-    pr_url:  Optional[str]        = None
+    task_id:  str
+    status:   str                  # queued | active | done | failed
+    title:    str
+    project:  Optional[str]        = None
+    agent:    Optional[str]        = None
+    notes:    Optional[str]        = None
+    pr_url:   Optional[str]        = None
 
 
 class ITaskQueue(abc.ABC):
