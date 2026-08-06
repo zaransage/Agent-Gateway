@@ -11,7 +11,7 @@ Endpoints:
   GET /health                           — service health check
 
 Multi-project configuration via environment:
-  PROJECTS=ipo_scanner:/path/to/ipo_scanner/tasks,creepos:/path/to/creepos/tasks
+  PROJECTS=data_pipeline:/path/to/data_pipeline/tasks,mobile_game:/path/to/mobile_game/tasks
 
 Single-project fallback:
   TASKS_DIR=/path/to/tasks

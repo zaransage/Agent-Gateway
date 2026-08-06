@@ -25,7 +25,7 @@ Returns:
 ```
 AGENT/AGENT:pong v1
 gateway: agent-gateway/1.0
-projects: ipo_scanner,creepos
+projects: data_pipeline,mobile_game
 queue_depth: 4
 agents_active: 1
 ```
@@ -46,12 +46,12 @@ title: Your task title here
 desc: What the agent should do
 pri: high
 tags: code,backend
-project: ipo_scanner
+project: data_pipeline
 ```
 
 **URL-encoded GET:**
 ```
-GET {{GATEWAY}}/agent?msg=AGENT%2FTASK%3Asubmit+v1%0Atitle%3A+Your+task+title+here%0Adesc%3A+What+the+agent+should+do%0Apri%3A+high%0Atags%3A+code%2Cbackend%0Aproject%3A+ipo_scanner
+GET {{GATEWAY}}/agent?msg=AGENT%2FTASK%3Asubmit+v1%0Atitle%3A+Your+task+title+here%0Adesc%3A+What+the+agent+should+do%0Apri%3A+high%0Atags%3A+code%2Cbackend%0Aproject%3A+data_pipeline
 ```
 
 Returns:
@@ -59,7 +59,7 @@ Returns:
 AGENT/TASK:ack v1
 id: 012
 status: queued
-poll: /task/status?id=012&project=ipo_scanner
+poll: /task/status?id=012&project=data_pipeline
 ```
 
 Save the `id` and `project` — you need them to poll.
@@ -69,7 +69,7 @@ Save the `id` and `project` — you need them to poll.
 ## Poll for result
 
 ```
-GET {{GATEWAY}}/task/status?id=012&project=ipo_scanner
+GET {{GATEWAY}}/task/status?id=012&project=data_pipeline
 ```
 
 Returns one of:
@@ -78,7 +78,7 @@ Returns one of:
 ```
 AGENT/TASK:result v1
 id: 012
-project: ipo_scanner
+project: data_pipeline
 status: queued
 title: Your task title here
 ```
@@ -87,7 +87,7 @@ title: Your task title here
 ```
 AGENT/TASK:result v1
 id: 012
-project: ipo_scanner
+project: data_pipeline
 status: active
 agent: claude-abc123
 notes: implementing format flag
@@ -97,7 +97,7 @@ notes: implementing format flag
 ```
 AGENT/TASK:result v1
 id: 012
-project: ipo_scanner
+project: data_pipeline
 status: done
 agent: claude-abc123
 pr: https://github.com/zaransage/IPO-Tracker/pull/42
@@ -114,7 +114,7 @@ GET {{GATEWAY}}/board
 Returns JSON array. Filter by project:
 
 ```
-GET {{GATEWAY}}/board?project=creepos
+GET {{GATEWAY}}/board?project=mobile_game
 ```
 
 ---
@@ -123,8 +123,8 @@ GET {{GATEWAY}}/board?project=creepos
 
 | Project | What it is |
 |---|---|
-| `ipo_scanner` | SEC EDGAR IPO pipeline (Python, FastAPI, PostgreSQL) |
-| `creepos` | Android space shooter (Godot 4, GDScript) |
+| `data_pipeline` | Example: a backend data pipeline service |
+| `mobile_game` | Example: a mobile game client |
 
 ---
 
@@ -134,7 +134,7 @@ GET {{GATEWAY}}/board?project=creepos
 |---|---|---|---|
 | `title` | yes | string | Short task title |
 | `desc` | yes | string | What to implement |
-| `project` | no | `ipo_scanner`, `creepos` | Defaults to `ipo_scanner` |
+| `project` | no | `data_pipeline`, `mobile_game` | Defaults to `data_pipeline` |
 | `pri` | no | `high`, `normal`, `low` | Default: `normal` |
 | `tags` | no | comma-separated | `code`, `backend`, `gdscript`, `art`, `frontend` |
 | `files` | no | comma-separated paths | Files agent should focus on |

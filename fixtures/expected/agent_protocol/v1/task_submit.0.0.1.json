@@ -6,7 +6,7 @@
     "desc":    "Extend cli_adaptor.py board command to support --format table|json|csv",
     "pri":     "high",
     "tags":    "code,backend",
-    "files":   "domain/ipo_scanner/core/adaptors/cli_adaptor.py",
+    "files":   "domain/data_pipeline/core/adaptors/cli_adaptor.py",
     "accept":  "table,json,csv"
   },
   "body": null

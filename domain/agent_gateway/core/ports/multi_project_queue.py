@@ -12,8 +12,8 @@ class MultiProjectQueue(ITaskQueue):
     one per project. Submit routes to a named project; status and board search all.
 
     projects: dict mapping project name → tasks directory path
-              e.g. {"ipo_scanner": Path("/home/.../ipo_scanner/tasks"),
-                    "creepos":     Path("/home/.../creepos/tasks")}
+              e.g. {"data_pipeline": Path("/home/.../data_pipeline/tasks"),
+                    "mobile_game":     Path("/home/.../mobile_game/tasks")}
 
     default_project: name used when TASK:submit omits the 'project' field.
     """
