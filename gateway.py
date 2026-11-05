@@ -20,7 +20,6 @@ import os
 from dataclasses import asdict
 from pathlib import Path
 from typing import Optional
-from urllib.parse import unquote_plus
 
 from fastapi import FastAPI, Query
 from fastapi.responses import PlainTextResponse
@@ -129,7 +128,10 @@ def task_status(
 
 @app.get("/agent")
 def agent(msg: str = Query(..., description="URL-encoded agent protocol v1 envelope")):
-    raw = unquote_plus(msg)
+    # FastAPI has already decoded the query parameter, including percent escapes
+    # and form-encoded spaces.  Decoding again would turn literal '+' values
+    # into spaces.
+    raw = msg
 
     try:
         envelope = parser.parse(raw)
